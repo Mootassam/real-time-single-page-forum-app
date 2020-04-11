@@ -19,7 +19,7 @@ const routes = [
     { path: '/signup', component: signup },
     { path: '/forum', component: forum, name:'forum'},
     { path: '/ask', component: Create},
-    { path: '/question/:slug', component: Read, name:'read'},
+    { path: '/question/:slug', component: Read, name:'Read'},
 
 
   ]

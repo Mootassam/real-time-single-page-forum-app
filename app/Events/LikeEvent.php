@@ -35,4 +35,5 @@ class LikeEvent implements ShouldBroadcast
     {
         return new Channel('likeChannel');
     }
+
 }

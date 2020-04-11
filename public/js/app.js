@@ -2631,15 +2631,19 @@ __webpack_require__.r(__webpack_exports__);
       count: this.content.like_count
     };
   },
-  created: function created() {
-    Echo.channel('LikeChannel').listen('LikeEvent', function (e) {
-      console.log(e);
-    });
-  },
   computed: {
     color: function color() {
       return this.liked ? 'red' : 'red lighten-4';
     }
+  },
+  created: function created() {
+    var _this = this;
+
+    Echo.channel('likeChannel').listen('LikeEvent', function (e) {
+      if (_this.content.id == e.id) {
+        e.type == 1 ? _this.count++ : _this.count--;
+      }
+    });
   },
   methods: {
     likeIt: function likeIt() {
@@ -2649,17 +2653,17 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     incr: function incr() {
-      var _this = this;
+      var _this2 = this;
 
       axios.post("/api/Like/".concat(this.content.id)).then(function (res) {
-        _this.count++;
+        _this2.count++;
       });
     },
     decr: function decr() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios["delete"]("/api/Like/".concat(this.content.id)).then(function (res) {
-        _this2.count--;
+        _this3.count--;
       });
     }
   }
@@ -2961,6 +2965,9 @@ __webpack_require__.r(__webpack_exports__);
         axios["delete"]("/api/".concat(_this.question.slug, "/reply/").concat(_this.content[index].id)).then(function (res) {
           _this.content.splice(index, 1);
         });
+      });
+      Echo["private"]('App.User.' + User.id()).notification(function (notification) {
+        _this.content.unshift(notification.reply);
       });
     }
   }
@@ -123833,7 +123840,7 @@ var routes = [{
 }, {
   path: '/question/:slug',
   component: _components_forum_read__WEBPACK_IMPORTED_MODULE_5__["default"],
-  name: 'read'
+  name: 'Read'
 }]; // 3. Create the router instance and pass the `routes` option
 // You can pass in additional options here, but let's
 // keep it simple for now.
@@ -123952,9 +123959,14 @@ window.axios.defaults.headers.common['Authorization'] = token;
 window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/dist/web/pusher.js");
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
-  key: "95235b342df08dff84d0",
+  key: '95235b342df08dff84d0',
   cluster: "mt1",
-  encrypted: true
+  encrypted: true,
+  Auth: {
+    headers: {
+      Authorization: token
+    }
+  }
 });
 
 /***/ }),

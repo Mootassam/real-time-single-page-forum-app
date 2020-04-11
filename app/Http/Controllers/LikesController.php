@@ -21,14 +21,14 @@ class LikesController extends Controller
 
         ]);
 
-        broadcast(new LikeEvent($reply->id,1))->toOthers();
+        broadcast(new LikeEvent($reply->id, 1))->toOthers();
 
 
 
   }
   public function unLikeIt(Reply $reply){
       $reply->like()->where('user_id',auth()->id())->first()->delete();
-      broadcast(new LikeEvent($reply->id,0))->toOthers();
+      broadcast(new LikeEvent($reply->id, 0))->toOthers();
 
 
   }

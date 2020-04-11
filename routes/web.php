@@ -15,8 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'home');
 Route::view('/{any}', 'home');
-Route::view('/{any}/{any1}', 'home');
-Route::view('/{any}/{any1}/{any2}', 'home');
+Route::view('/{any1}/{any2}', 'home');
 // when you load page like localhost::8000/login, the vue js return error , because he dont know  this route in web.php
 //so you have to add the second route , for laravel understand how was your url type , he return home , wth actualty page your reload in
 // our example he return login without any error
