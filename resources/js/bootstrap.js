@@ -42,9 +42,9 @@ window.Pusher = require('pusher-js');
      key: '95235b342df08dff84d0',
      cluster: "mt1",
      encrypted: true,
-     Auth:{
+     auth:{
          headers:{
-             Authorization:  token
+            Authorization :  token
          }
      }
  });
